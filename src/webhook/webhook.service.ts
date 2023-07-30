@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { CounterService } from 'src/counter/counter.service';
 import { PostgresService } from 'src/utils/postgres.service';
@@ -21,7 +21,7 @@ export class WebhookService {
     if (init) {
       this.logger.log(`Initializing for table ${tableName}`);
 
-      programConfigData.forEach(async (element) => {
+      for (const element of programConfigData) {
         const sqlQuery = element.initQuery;
         this.logger.debug(`Init sqlQuery: ${sqlQuery}`);
         const queryRes = await this.postgresService.query(sqlQuery);
@@ -31,11 +31,11 @@ export class WebhookService {
           element.programName,
           queryRes.rows,
         );
-      });
+      }
       return;
     }
 
-    programConfigData.forEach(async (element) => {
+    for (const element of programConfigData) {
       const sqlQuery = format(element.updateQuery, data[0]);
       this.logger.debug(`Generated sqlQuery: ${sqlQuery}`);
       const queryRes = await this.postgresService.query(sqlQuery);
@@ -45,6 +45,6 @@ export class WebhookService {
         element.programName,
         queryRes.rows[0],
       );
-    });
+    }
   }
 }

@@ -34,13 +34,10 @@ export class CounterService {
     // create a folder name if exists with the date
     const folderName = path.join(this.basefolder, date, programName);
     if (!fs.existsSync(folderName)) {
-      this.logger.error(
-        `Event ${eventName} for program ${programName} with date ${date} is not initailized`,
+      this.logger.log(
+        `Event ${eventName} for program ${programName} with date ${date} is not initailized, Creating the folder`,
       );
-      throw new BadRequestException(
-        HttpStatus.BAD_REQUEST,
-        `Event ${eventName} for program ${programName} with date ${date} is not initailized`,
-      );
+      fs.mkdirSync(folderName, { recursive: true });
     }
 
     // Files are named as eventName-event.data.{number}.csv
