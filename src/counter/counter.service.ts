@@ -43,7 +43,7 @@ export class CounterService {
     // Files are named as eventName-event.data.{number}.csv
     // Get the next file name
     const files = fs.readdirSync(folderName);
-    const nextFileNumber = files.length + 1 - 2;
+    const nextFileNumber = files.length + 1 + (files.includes('checkpoint.csv') ? - 2 : 0)
     const fileName = `${eventName}-event.data.${nextFileNumber}.csv`;
     const filePath = path.join(folderName, fileName);
     this.utilsService.writeCSV(filePath, eventData);
