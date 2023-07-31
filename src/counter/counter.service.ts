@@ -58,7 +58,7 @@ export class CounterService {
     data.forEach((element) => {
       console.log(element);
       const fileName = `${eventName}-event.data.1.csv`;
-      const datefolderName = path.join(this.basefolder, element.date);
+      const datefolderName = path.join(this.basefolder, element.date.replaceAll('/', '-'));
       if (!fs.existsSync(datefolderName)) {
         this.logger.log(`Creating folder ${datefolderName}`);
         fs.mkdirSync(datefolderName);

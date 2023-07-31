@@ -40,7 +40,7 @@ export class WebhookService {
       this.logger.debug(`Generated sqlQuery: ${sqlQuery}`);
       const queryRes = await this.postgresService.query(sqlQuery);
       this.counterService.generateCounters(
-        queryRes.rows[0].date,
+        queryRes.rows[0].date.replaceAll('/', '-'),
         element.eventName,
         element.programName,
         queryRes.rows[0],
