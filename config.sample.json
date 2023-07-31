@@ -1,0 +1,11 @@
+{
+  "baseFolder": "counters",
+  "public.attendance": [
+    {
+      "eventName": "attendance",
+      "programName": "cdc",
+      "initQuery": "select date, schoolid, count(attendance) from public.attendance where attendance = TRUE group by schoolid, date order by date;",
+      "updateQuery": "select '{date}' as date, t.schoolid, t.count as attendance from (select schoolid, count(attendance) from public.attendance where date='{date}' and attendance = TRUE group by schoolid) as t where schoolid = {schoolid};"
+    }
+  ]
+}
